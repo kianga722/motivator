@@ -49,11 +49,8 @@ table {
 }
 
 a {
+  color: inherit;
   text-decoration: none;
-}
-
-a:visited {
-  color: black;
 }
 
 /* Body*/
