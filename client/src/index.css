@@ -1,0 +1,181 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+  vertical-align: baseline;
+  box-sizing: border-box;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:visited {
+  color: inherit;
+}
+
+/* Body*/
+
+body {
+	background-color: rgb(186, 73, 47);
+	font-family: "Open Sans", Tahoma, Geneva, sans-serif;
+}
+
+/* Nav */
+#navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(164, 164, 189);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.logo {
+  display: flex;
+  margin: 2rem 2rem 1.5rem 2rem;
+  padding-bottom: .5rem;
+  font-size: 3rem;
+  border-bottom: 3px solid transparent; 
+}
+
+.logo:hover {
+  border-bottom: 3px solid #444857; 
+}
+
+.navLinks {
+  padding: 1rem;
+}
+
+.navLinks a {
+  display: inline-block;
+  margin: .5rem;
+  padding: 1rem;
+  border: 3px solid #444857; 
+  border-radius: 4px;
+  font-size: 1.5rem;
+}
+
+.btn-quotes:hover {
+  background-color: #c04823; 
+  color: white;
+}
+
+.btn-videos:hover {
+  background-color: #1c9969; 
+  color: white;
+}
+
+/* Content Wrapper */
+#content-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Quote Box */
+#quoteBox {
+  width: 600px;
+  margin-top: 15vh;
+  padding: 2rem 2rem 0 2rem;
+  background-color: rgb(249, 249, 251);
+  border-radius: 4px;
+}
+
+.btn-quote-wrapper {
+  text-align: center;
+}
+
+.btn-quote {
+  padding: 1rem;
+  color: white;
+  font-weight: 700;
+  background-color: rgb(12, 137, 33);
+  border: 1px solid #444857;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-quote:hover {
+  opacity: 0.8;
+}
+
+.quoteWrapper {
+  margin-bottom: 2rem;
+  animation-duration: 2s;
+  animation-fill-mode: both;
+}
+
+.quote {
+  padding: 2rem 1rem;
+  font-size: 2rem;
+  text-align: center;
+  line-height: 2.3rem;
+}
+
+.fa-quote-left {
+  margin-right: 1rem;
+}
+
+.fa-quote-right {
+  margin-left: 1rem;
+}
+
+.author {
+  text-align: right;
+}
+
+@keyframes fadeIn {
+ 0% {opacity: 0;}
+ 100% {opacity: 1;}
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+}
+
+/* Video Box */
+#videoBox {
+  margin-top: 15vh;
+}
