@@ -5,7 +5,6 @@ class Navbar extends Component {
   componentDidUpdate() {
     const btnQuote = document.querySelector('.btn-quotes');
     const btnVideo = document.querySelector('.btn-videos');
-    console.log(this.props.navQuote, this.props.navVideo)
     this.props.navQuote ? btnQuote.classList.add('quote-active') : btnQuote.classList.remove('quote-active');
     this.props.navVideo ? btnVideo.classList.add('video-active') : btnVideo.classList.remove('video-active'); 
   }
