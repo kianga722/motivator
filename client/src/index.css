@@ -120,6 +120,7 @@ body {
 #videoBox {
   width: 600px;
   margin-top: 15vh;
+  margin-bottom: 15vh;
   padding: 2rem 2rem 0 2rem;
   background-color: rgb(249, 249, 251);
   border-radius: 4px;
