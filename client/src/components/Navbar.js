@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 class Navbar extends Component {
+  componentDidUpdate() {
+    const btnQuote = document.querySelector('.btn-quotes');
+    const btnVideo = document.querySelector('.btn-videos');
+    console.log(this.props.navQuote, this.props.navVideo)
+    this.props.navQuote ? btnQuote.classList.add('quote-active') : btnQuote.classList.remove('quote-active');
+    this.props.navVideo ? btnVideo.classList.add('video-active') : btnVideo.classList.remove('video-active'); 
+  }
   // Want homepage link to refresh quote but other links to not
   render() {
     return (

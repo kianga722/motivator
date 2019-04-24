@@ -9,9 +9,30 @@ class App extends Component {
     super(props);
 
     this.state = {
+      navQuote: false,
+      navVideo: false,
       quoteCurrent: {},
+      videoCurrent: {
+        url: 'https://www.youtube.com/embed/ZXsQAXx_ao0',
+        title: `Shia LaBeouf "Just Do It" Motivational Speech`,
+      },
     };
   }
+
+  quoteToggle = () => {
+    this.setState({
+      navQuote: true,
+      navVideo: false,
+    })
+  }
+
+  videoToggle = () => {
+    this.setState({
+      navQuote: false,
+      navVideo: true,
+    })
+  }
+
 
   quoteSet = (quoteGetJSON) => {
     this.setState({
@@ -21,21 +42,44 @@ class App extends Component {
       }
     })
   }
+
+  videoSet = (videoGetJSON) => {
+    this.setState({
+      videoCurrent: {
+        url: videoGetJSON.url,
+        title: videoGetJSON.title
+      }
+    })
+  }
   
   render() {
     return (
       <Router>
-        <Navbar />
+        <Navbar
+          navQuote={this.state.navQuote}
+          navVideo={this.state.navVideo}
+        />
         <div id='content-wrapper'>
           <Route
             path='/' exact
             render={(props) =>
               <QuoteBox {...props}
+              quoteToggle={this.quoteToggle}
+              videoToggle={this.videoToggle}  
               quoteCurrent={this.state.quoteCurrent}
               quoteSet={this.quoteSet}
             />}
           />
-          <Route path='/videos' component={VideoBox} />
+          <Route
+            path='/videos' exact
+            render={(props) =>
+              <VideoBox {...props}
+              quoteToggle={this.quoteToggle}
+              videoToggle={this.videoToggle} 
+              videoCurrent={this.state.videoCurrent}
+              videoSet={this.videoSet}
+            />}
+          />
         </div>
       </Router>
     );

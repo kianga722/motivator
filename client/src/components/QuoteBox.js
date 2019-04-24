@@ -2,36 +2,53 @@ import React, { Component } from 'react';
 
 class QuoteBox extends Component {
 
-  // Function to toggle fade
-  fadeToggle = () => {
+  // Function to set quoteSet to true
+  quoteSet = () => {
+    if (!this.state.quoteSet) {
+      this.setState({
+        quoteSet: true,
+      })
+    }
+  }
+
+  // Function to remove fade class
+  fadeRemove = () => {
     const quoteWrapper = document.querySelector('.quoteWrapper');
-    quoteWrapper.classList.toggle('fadeIn');
+    quoteWrapper.classList.remove('fadeIn');
+  }
+
+  // Function to add fade class
+  fadeAdd = () => {
+    const quoteWrapper = document.querySelector('.quoteWrapper');
+     quoteWrapper.classList.add('fadeIn');
   }
 
   // Function to get quote
   quoteGet = async (e) => {
     // Remove fadeIn class
-    this.fadeToggle();
+    this.fadeRemove();
     // Get new quote
-    let quoteGet = await fetch('/api/');
+    let quoteGet = await fetch('/api/quote');
     let quoteGetJSON = await quoteGet.json();
     // Make sure different than current quote
     while (this.props.quoteCurrent.quote === quoteGetJSON.quote) {
-      quoteGet = await fetch('/api/');
+      quoteGet = await fetch('/api/quote');
       quoteGetJSON = await quoteGet.json();
     }
     // Set current quote state
     this.props.quoteSet(quoteGetJSON);
     // Add fadeIn class again
-    this.fadeToggle();
+    this.fadeAdd();
   }
   
-
   // Get random quote before render
   componentDidMount() {
+    this.props.quoteToggle();
     if (Object.keys(this.props.quoteCurrent).length === 0) {
       this.quoteGet();
     }
+    // Prevent animation if coming back from video section
+    this.fadeRemove();
   }
 
   // Function to get new quote
@@ -41,7 +58,6 @@ class QuoteBox extends Component {
     this.quoteGet();
   }
   
-
   render() {
     return (
       <section id='quoteBox'>
@@ -52,9 +68,9 @@ class QuoteBox extends Component {
         </form>
         <div className='quoteWrapper fadeIn'>
           <div className='quote'>
-            <i class="fas fa-quote-left"></i>
+            <i className="fas fa-quote-left"></i>
             {this.props.quoteCurrent.quote}
-            <i class="fas fa-quote-right"></i>
+            <i className="fas fa-quote-right"></i>
           </div>
           <div className='author'>
             -&nbsp;{this.props.quoteCurrent.author}

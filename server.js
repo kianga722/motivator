@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 // Quote Model
 const Quote = require('./models/Quote');
+const Video = require('./models/Video');
 
 // DOTENV
 if (process.env.NODE_ENV !== 'production') {
@@ -25,7 +26,7 @@ mongoose
 
 
 // Endpoint for random quote
-app.get('/api/', (req, res) => {
+app.get('/api/quote', (req, res) => {
   Quote
     .countDocuments()
     .exec((err, countDocuments) => {
@@ -34,6 +35,19 @@ app.get('/api/', (req, res) => {
         .findOne()
         .skip(random)
         .then(quoteRand => res.json(quoteRand));
+    });
+});
+
+// Endpoint for random video
+app.get('/api/video', (req, res) => {
+  Video
+    .countDocuments()
+    .exec((err, countDocuments) => {
+      const random = Math.floor(Math.random() * countDocuments);
+      Video
+        .findOne()
+        .skip(random)
+        .then(videoRand => res.json(videoRand));
     });
 });
 

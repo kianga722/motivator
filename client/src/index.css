@@ -56,7 +56,9 @@ a {
 /* Body*/
 
 body {
-	background-color: rgb(186, 73, 47);
+  /* background-color: rgb(186, 73, 47); */
+  background-image: url('./images/bg.jpg');
+  background-position: 40% 0;
 	font-family: "Open Sans", Tahoma, Geneva, sans-serif;
 }
 
@@ -94,12 +96,14 @@ body {
   font-size: 1.5rem;
 }
 
-.btn-quotes:hover {
+.btn-quotes:hover,
+.quote-active {
   background-color: #c04823; 
   color: white;
 }
 
-.btn-videos:hover {
+.btn-videos:hover,
+.video-active {
   background-color: #1c9969; 
   color: white;
 }
@@ -111,30 +115,35 @@ body {
   align-items: center;
 }
 
-/* Quote Box */
-#quoteBox {
+/* Quote Box and Video Box */
+#quoteBox,
+#videoBox {
   width: 600px;
   margin-top: 15vh;
   padding: 2rem 2rem 0 2rem;
   background-color: rgb(249, 249, 251);
   border-radius: 4px;
+  border: 7px solid #444857;
 }
 
-.btn-quote-wrapper {
+.btn-quote-wrapper,
+.btn-video-wrapper {
   text-align: center;
 }
 
-.btn-quote {
+.btn-quote,
+.btn-video {
   padding: 1rem;
   color: white;
   font-weight: 700;
-  background-color: rgb(12, 137, 33);
+  background-color: #c04823;
   border: 1px solid #444857;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.btn-quote:hover {
+.btn-quote:hover,
+.btn-video:hover {
   opacity: 0.8;
 }
 
@@ -163,16 +172,44 @@ body {
   text-align: right;
 }
 
-@keyframes fadeIn {
- 0% {opacity: 0;}
- 100% {opacity: 1;}
+
+/* Video Box */
+.btn-video {
+  background-color: #1c9969;
 }
 
+.iframeWrapper {
+  animation-duration: 2s;
+  animation-fill-mode: both;
+}
+
+.iframeWrapper iframe {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.videoTitle {
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+ 
 .fadeIn {
   animation-name: fadeIn;
 }
 
-/* Video Box */
-#videoBox {
-  margin-top: 15vh;
+@keyframes fadeInVideo {
+  0% {opacity: 0;}
+  50% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+.fadeInVideo {
+  animation-name: fadeInVideo;
 }
