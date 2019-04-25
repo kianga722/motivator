@@ -31,19 +31,20 @@ class VideoBox extends Component {
     this.fadeAdd();
   }
 
-  // Prevent animation if coming back from video section
-  componentDidMount() {
-    this.props.videoToggle();
-    this.fadeRemove();
-  }
-  
-  // Function to get new quote
+  // Function to get new video
   videoNew = (e) => {
     // Prevent reload
     e.preventDefault();
     this.videoGet();
   }
 
+  componentDidMount() {
+    // set navbar to video
+    this.props.videoToggle();
+    // Prevent animation if coming back from quote section
+    this.fadeRemove();
+  }
+  
   render() {
     return (
       <section id='videoBox'>

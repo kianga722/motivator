@@ -1,16 +1,6 @@
 import React, { Component } from 'react';
 
 class QuoteBox extends Component {
-
-  // Function to set quoteSet to true
-  quoteSet = () => {
-    if (!this.state.quoteSet) {
-      this.setState({
-        quoteSet: true,
-      })
-    }
-  }
-
   // Function to remove fade class
   fadeRemove = () => {
     const quoteWrapper = document.querySelector('.quoteWrapper');
@@ -40,22 +30,24 @@ class QuoteBox extends Component {
     // Add fadeIn class again
     this.fadeAdd();
   }
-  
-  // Get random quote before render
-  componentDidMount() {
-    this.props.quoteToggle();
-    if (Object.keys(this.props.quoteCurrent).length === 0) {
-      this.quoteGet();
-    }
-    // Prevent animation if coming back from video section
-    this.fadeRemove();
-  }
 
   // Function to get new quote
   quoteNew = (e) => {
     // Prevent reload
     e.preventDefault();
     this.quoteGet();
+  }
+  
+  // Get random quote before render
+  componentDidMount() {
+    // set navbar to quote
+    this.props.quoteToggle();
+    // get quote only if no quote already
+    if (Object.keys(this.props.quoteCurrent).length === 0) {
+      this.quoteGet();
+    }
+    // Prevent animation if coming back from video section
+    this.fadeRemove();
   }
   
   render() {

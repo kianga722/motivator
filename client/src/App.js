@@ -8,6 +8,8 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    // quote always random
+    // initial video always just do it
     this.state = {
       navQuote: false,
       navVideo: false,
@@ -19,6 +21,7 @@ class App extends Component {
     };
   }
 
+  // sets current state to quote or video for navbar to use
   quoteToggle = () => {
     this.setState({
       navQuote: true,
@@ -33,7 +36,7 @@ class App extends Component {
     })
   }
 
-
+  // sets the quote or video content for rendering
   quoteSet = (quoteGetJSON) => {
     this.setState({
       quoteCurrent: {
