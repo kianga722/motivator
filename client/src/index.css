@@ -214,3 +214,32 @@ body {
 .fadeInVideo {
   animation-name: fadeInVideo;
 }
+
+@media (max-width: 800px) {
+  .logo {
+    display: none;
+  }
+
+  .navLinks {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0.5rem;
+  }
+
+  .navLinks a {
+    font-size: 1.2rem;
+  }
+
+  #quoteBox,
+  #videoBox {
+    width: 600px;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+  }
+
+  .quote {
+    font-size: 1.5rem;
+    line-height: 1.8rem;
+  }
+}
