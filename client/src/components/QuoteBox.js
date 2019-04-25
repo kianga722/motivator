@@ -1,22 +1,11 @@
 import React, { Component } from 'react';
+import { fadeChange } from '../helpers';
 
 class QuoteBox extends Component {
-  // Function to remove fade class
-  fadeRemove = () => {
-    const quoteWrapper = document.querySelector('.quoteWrapper');
-    quoteWrapper.classList.remove('fadeIn');
-  }
-
-  // Function to add fade class
-  fadeAdd = () => {
-    const quoteWrapper = document.querySelector('.quoteWrapper');
-     quoteWrapper.classList.add('fadeIn');
-  }
-
   // Function to get quote
-  quoteGet = async (e) => {
+  quoteGet = async () => {
     // Remove fadeIn class
-    this.fadeRemove();
+    fadeChange('.quoteWrapper', 'fadeIn', false);
     // Get new quote
     let quoteGet = await fetch('/api/quote');
     let quoteGetJSON = await quoteGet.json();
@@ -28,7 +17,7 @@ class QuoteBox extends Component {
     // Set current quote state
     this.props.quoteSet(quoteGetJSON);
     // Add fadeIn class again
-    this.fadeAdd();
+    fadeChange('.quoteWrapper', 'fadeIn', true);
   }
 
   // Function to get new quote
@@ -47,7 +36,7 @@ class QuoteBox extends Component {
       this.quoteGet();
     }
     // Prevent animation if coming back from video section
-    this.fadeRemove();
+    fadeChange('.quoteWrapper', 'fadeIn', false);
   }
   
   render() {

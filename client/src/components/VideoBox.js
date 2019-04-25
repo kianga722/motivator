@@ -1,22 +1,11 @@
 import React, { Component } from 'react';
+import { fadeChange } from '../helpers';
 
 class VideoBox extends Component {
-  // Function to remove fade class
-  fadeRemove = () => {
-    const iframeWrapper = document.querySelector('.iframeWrapper');
-    iframeWrapper.classList.remove('fadeInVideo');
-  }
-
-  // Function to add fade class
-  fadeAdd = () => {
-    const iframeWrapper = document.querySelector('.iframeWrapper');
-    iframeWrapper.classList.add('fadeInVideo');
-  }
-
   // Function to get quote
-  videoGet = async (e) => {
+  videoGet = async () => {
     // Remove fadeInVideo class
-    this.fadeRemove();
+    fadeChange('.iframeWrapper', 'fadeInVideo', false);
     // Get new quote
     let videoGet = await fetch('/api/video');
     let videoGetJSON = await videoGet.json();
@@ -28,7 +17,7 @@ class VideoBox extends Component {
     // Set current quote state
     this.props.videoSet(videoGetJSON);
     // Add fadeInVideo class again
-    this.fadeAdd();
+    fadeChange('.iframeWrapper', 'fadeInVideo', true);
   }
 
   // Function to get new video
@@ -42,7 +31,7 @@ class VideoBox extends Component {
     // set navbar to video
     this.props.videoToggle();
     // Prevent animation if coming back from quote section
-    this.fadeRemove();
+    fadeChange('.iframeWrapper', 'fadeInVideo', false);
   }
   
   render() {
