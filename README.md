@@ -13,3 +13,4 @@ Displays random motivational quotes and videos
 ## Future Improvements
 
 * Implement Redux
+* Make CSS Animations more consistent (Try ReactCSSTransitionGroup?)
