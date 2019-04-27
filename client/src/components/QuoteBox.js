@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 import { getQuote } from '../actions/quoteActions';
 import { setNavQuote } from '../actions/navActions';
 import PropTypes from 'prop-types';
+import { createVerify } from 'crypto';
 
 class QuoteBox extends Component {
   // Function to get new quote
   quoteNew = (e) => {
     // Prevent reload
     e.preventDefault();
-    // Add fadeIn class again
     // Need setTimeout or else animation will not restart
     setTimeout(function () {
       fadeChange('.quoteWrapper', 'fadeIn', true);
@@ -25,12 +25,14 @@ class QuoteBox extends Component {
   componentDidMount() {
     // set navbar to quote
     this.props.setNavQuote();
+    // Do not fadeIn if coming from video section
+    if (this.props.quote.quoteCurrent.quote !== null && !this.props.nav.nav.quote) {
+      fadeChange('.quoteWrapper', 'fadeIn', false);
+    }
     // get quote only if no quote already
     if (this.props.quote.quoteCurrent.quote === null) {
       this.props.getQuote();
     }
-    // Remove fadeIn class
-    fadeChange('.quoteWrapper', 'fadeIn', false);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -38,14 +40,14 @@ class QuoteBox extends Component {
     if (this.props.quote.quoteCurrent.quote === null) {
       return true;
     }
-    // Only get new quote if already in quote section and if the new quote would be the same as the old quote
+    // Get new quote only if on quote section already and if the new quote is the same as the old quote
     const isQuote = this.props.nav.nav.quote;
-    while (isQuote && this.props.quote.quoteCurrent.quote === nextProps.quote.quoteCurrent.quote) {
+    if (isQuote && this.props.quote.quoteCurrent.quote === nextProps.quote.quoteCurrent.quote) {
       this.props.getQuote();
+      return false;
     }
     return true;
   }
-
   
   render() {
     const { quoteCurrent } = this.props.quote;
@@ -74,13 +76,12 @@ class QuoteBox extends Component {
 QuoteBox.propTypes = {
   getQuote: PropTypes.func.isRequired,
   quote: PropTypes.object.isRequired,
-  setNavQuote: PropTypes.func.isRequired,
-  nav: PropTypes.object.isRequired,
+  setNavQuote: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
   quote: state.quote,
-  nav: state.nav,
+  nav: state.nav
 });
   
 export default connect(mapStateToProps, { getQuote, setNavQuote })(QuoteBox);

@@ -11,7 +11,6 @@ class VideoBox extends Component {
   videoNew = (e) => {
     // Prevent reload
     e.preventDefault();
-    // Add fadeInVideo class again
     // Need setTimeout or else animation will not restart
     setTimeout(function () {
       fadeChange('.iframeWrapper', 'fadeInVideo', true);
@@ -25,14 +24,17 @@ class VideoBox extends Component {
     // set navbar to video
     this.props.setNavVideo();
     // Prevent animation if coming back from quote section
-    fadeChange('.iframeWrapper', 'fadeInVideo', false);
+    if (!this.props.nav.nav.video) {
+      fadeChange('.iframeWrapper', 'fadeInVideo', false);
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    // Only get new video if already in video section and if the new video would be the same as the old video
+    // Get new video only if on video section already and if the new video is the same as the old video
     const isVideo = this.props.nav.nav.video;
-    while (isVideo && this.props.video.videoCurrent.url === nextProps.video.videoCurrent.url) {
+    if (isVideo && this.props.video.videoCurrent.url === nextProps.video.videoCurrent.url) {
       this.props.getVideo();
+      return false;
     }
     return true;
   }
@@ -67,12 +69,11 @@ VideoBox.propTypes = {
   getVideo: PropTypes.func.isRequired,
   video: PropTypes.object.isRequired,
   setNavVideo: PropTypes.func.isRequired,
-  nav: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   video: state.video,
-  nav: state.nav,
+  nav: state.nav
 });
 
 export default connect(mapStateToProps, { getVideo, setNavVideo })(VideoBox);
