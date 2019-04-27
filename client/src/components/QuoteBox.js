@@ -1,45 +1,54 @@
 import React, { Component } from 'react';
 import { fadeChange } from '../helpers';
 
-class QuoteBox extends Component {
-  // Function to get quote
-  quoteGet = async () => {
-    // Remove fadeIn class
-    fadeChange('.quoteWrapper', 'fadeIn', false);
-    // Get new quote
-    let quoteGet = await fetch('/api/quote');
-    let quoteGetJSON = await quoteGet.json();
-    // Make sure different than current quote
-    while (this.props.quoteCurrent.quote === quoteGetJSON.quote) {
-      quoteGet = await fetch('/api/quote');
-      quoteGetJSON = await quoteGet.json();
-    }
-    // Set current quote state
-    this.props.quoteSet(quoteGetJSON);
-    // Add fadeIn class again
-    fadeChange('.quoteWrapper', 'fadeIn', true);
-  }
+import { connect } from 'react-redux';
+import { getQuote } from '../actions/quoteActions';
+import { setNavQuote } from '../actions/navActions';
+import PropTypes from 'prop-types';
 
+class QuoteBox extends Component {
   // Function to get new quote
   quoteNew = (e) => {
     // Prevent reload
     e.preventDefault();
-    this.quoteGet();
+    // Add fadeIn class again
+    // Need setTimeout or else animation will not restart
+    setTimeout(function () {
+      fadeChange('.quoteWrapper', 'fadeIn', true);
+    }, 1)
+    this.props.getQuote();
+    // Remove fadeIn class
+    fadeChange('.quoteWrapper', 'fadeIn', false);
   }
   
   // Get random quote before render
   componentDidMount() {
     // set navbar to quote
-    this.props.quoteToggle();
+    this.props.setNavQuote();
     // get quote only if no quote already
-    if (Object.keys(this.props.quoteCurrent).length === 0) {
-      this.quoteGet();
+    if (this.props.quote.quoteCurrent.quote === null) {
+      this.props.getQuote();
     }
-    // Prevent animation if coming back from video section
+    // Remove fadeIn class
     fadeChange('.quoteWrapper', 'fadeIn', false);
   }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // Always get new quote when first loading page
+    if (this.props.quote.quoteCurrent.quote === null) {
+      return true;
+    }
+    // Only get new quote if already in quote section and if the new quote would be the same as the old quote
+    const isQuote = this.props.nav.nav.quote;
+    while (isQuote && this.props.quote.quoteCurrent.quote === nextProps.quote.quoteCurrent.quote) {
+      this.props.getQuote();
+    }
+    return true;
+  }
+
   
   render() {
+    const { quoteCurrent } = this.props.quote;
     return (
       <section id='quoteBox'>
         <form className='btn-quote-wrapper' ref='form' onSubmit={this.quoteNew}>
@@ -50,11 +59,11 @@ class QuoteBox extends Component {
         <div className='quoteWrapper fadeIn'>
           <div className='quote'>
             <i className="fas fa-quote-left"></i>
-            {this.props.quoteCurrent.quote}
+            {quoteCurrent.quote}
             <i className="fas fa-quote-right"></i>
           </div>
           <div className='author'>
-            -&nbsp;{this.props.quoteCurrent.author}
+            -&nbsp;{quoteCurrent.author}
           </div>
         </div>
       </section>
@@ -62,4 +71,16 @@ class QuoteBox extends Component {
   }
 }
 
-export default QuoteBox;
+QuoteBox.propTypes = {
+  getQuote: PropTypes.func.isRequired,
+  quote: PropTypes.object.isRequired,
+  setNavQuote: PropTypes.func.isRequired,
+  nav: PropTypes.object.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+  quote: state.quote,
+  nav: state.nav,
+});
+  
+export default connect(mapStateToProps, { getQuote, setNavQuote })(QuoteBox);

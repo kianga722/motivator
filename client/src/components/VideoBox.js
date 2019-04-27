@@ -1,40 +1,44 @@
 import React, { Component } from 'react';
 import { fadeChange } from '../helpers';
 
-class VideoBox extends Component {
-  // Function to get quote
-  videoGet = async () => {
-    // Remove fadeInVideo class
-    fadeChange('.iframeWrapper', 'fadeInVideo', false);
-    // Get new quote
-    let videoGet = await fetch('/api/video');
-    let videoGetJSON = await videoGet.json();
-    // Make sure different than current quote
-    while (this.props.videoCurrent.url === videoGetJSON.url) {
-      videoGet = await fetch('/api/video');
-      videoGetJSON = await videoGet.json();
-    }
-    // Set current quote state
-    this.props.videoSet(videoGetJSON);
-    // Add fadeInVideo class again
-    fadeChange('.iframeWrapper', 'fadeInVideo', true);
-  }
+import { connect } from 'react-redux';
+import { getVideo } from '../actions/videoActions';
+import { setNavVideo } from '../actions/navActions';
+import PropTypes from 'prop-types';
 
+class VideoBox extends Component {
   // Function to get new video
   videoNew = (e) => {
     // Prevent reload
     e.preventDefault();
-    this.videoGet();
+    // Add fadeInVideo class again
+    // Need setTimeout or else animation will not restart
+    setTimeout(function () {
+      fadeChange('.iframeWrapper', 'fadeInVideo', true);
+    }, 1)
+    this.props.getVideo();
+    // Remove fadeInVideo class
+    fadeChange('.iframeWrapper', 'fadeInVideo', false); 
   }
 
   componentDidMount() {
     // set navbar to video
-    this.props.videoToggle();
+    this.props.setNavVideo();
     // Prevent animation if coming back from quote section
     fadeChange('.iframeWrapper', 'fadeInVideo', false);
   }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // Only get new video if already in video section and if the new video would be the same as the old video
+    const isVideo = this.props.nav.nav.video;
+    while (isVideo && this.props.video.videoCurrent.url === nextProps.video.videoCurrent.url) {
+      this.props.getVideo();
+    }
+    return true;
+  }
   
   render() {
+    const { videoCurrent } = this.props.video;
     return (
       <section id='videoBox'>
         <form className='btn-video-wrapper' ref='form' onSubmit={this.videoNew}>
@@ -46,12 +50,12 @@ class VideoBox extends Component {
           <div className='iframeWrapper fadeInVideo'>
             <iframe
               title='video'
-              width='560' height='293' src={this.props.videoCurrent.url} frameBorder='0' allow='encrypted-media' allowFullScreen
+              width='560' height='293' src={videoCurrent.url} frameBorder='0' allow='encrypted-media' allowFullScreen
             >
             </iframe>
           </div>
           <div className='videoTitle'>
-            {this.props.videoCurrent.title}
+            {videoCurrent.title}
           </div>
         </div>
       </section>
@@ -59,4 +63,16 @@ class VideoBox extends Component {
   }
 }
 
-export default VideoBox;
+VideoBox.propTypes = {
+  getVideo: PropTypes.func.isRequired,
+  video: PropTypes.object.isRequired,
+  setNavVideo: PropTypes.func.isRequired,
+  nav: PropTypes.object.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+  video: state.video,
+  nav: state.nav,
+});
+
+export default connect(mapStateToProps, { getVideo, setNavVideo })(VideoBox);

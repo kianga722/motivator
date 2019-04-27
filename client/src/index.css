@@ -87,13 +87,15 @@ body {
   padding: 1rem;
 }
 
-.navLinks a {
+.btn-quotes,
+.btn-videos {
   display: inline-block;
   margin: .5rem;
   padding: 1rem;
   border: 3px solid #444857; 
   border-radius: 4px;
   font-size: 1.5rem;
+  cursor: pointer;
 }
 
 .btn-quotes:hover,
