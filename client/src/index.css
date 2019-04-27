@@ -229,7 +229,8 @@ body {
     padding: 0.5rem;
   }
 
-  .navLinks a {
+  .btn-quotes,
+  .btn-videos {
     font-size: 1.2rem;
   }
 
