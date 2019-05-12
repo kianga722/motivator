@@ -2,7 +2,7 @@ import { GET_VIDEO } from '../actions/types';
 
 const initialState = {
   videoCurrent: {
-    url: 'https://www.youtube.com/embed/ZXsQAXx_ao0',
+    url: 'ZXsQAXx_ao0',
     title: `Shia LaBeouf "Just Do It" Motivational Speech`,
   }
 }

@@ -13,11 +13,53 @@ class VideoBox extends Component {
     e.preventDefault();
     // Need setTimeout or else animation will not restart
     setTimeout(function () {
-      fadeChange('.iframeWrapper', 'fadeInVideo', true);
+      fadeChange('.youtube', 'fadeInVideo', true);
     }, 1)
     this.props.getVideo();
     // Remove fadeInVideo class
-    fadeChange('.iframeWrapper', 'fadeInVideo', false); 
+    fadeChange('.youtube', 'fadeInVideo', false); 
+  }
+
+  // Only want to load video if user clicks on the cover image
+  videoPlay = () => {
+    const youtube = document.querySelector('.youtube');
+    // Only edit content if iFrame is not already present
+    const iframe = document.querySelector('iframe');
+    if (!youtube.contains(iframe)) {
+      // Remove any previous image
+      youtube.innerHTML = '';
+      // Place iFrame
+      const { videoCurrent } = this.props.video;
+      youtube.innerHTML = `
+        <iframe
+          title='video'
+          width='560'
+          height='293'
+          src='https://www.youtube.com/embed/${videoCurrent.url}?rel=0&showinfo=0&autoplay=1' frameBorder='0'
+          allow='autoplay; encrypted-media'
+          allowFullScreen
+        >
+        </iframe>
+      `
+    }
+  };
+
+  // Setup Youtube Lazy Loading
+  ytLazyLoad = () => {
+    const youtube = document.querySelector('.youtube');
+    // Remove previous images
+    youtube.innerHTML = '';
+    // create arrow element
+    const arrow = document.createElement('div');
+    arrow.classList.add('play-button')
+    // append arrow
+    youtube.appendChild(arrow);
+    // create image element
+    const image = document.createElement('img');
+    // thumbnail image source
+    image.src = `https://img.youtube.com/vi/${youtube.dataset.embed}/mqdefault.jpg`;
+    // append image 
+    youtube.appendChild(image);
   }
 
   componentDidMount() {
@@ -25,8 +67,10 @@ class VideoBox extends Component {
     this.props.setNavVideo();
     // Prevent animation if coming back from quote section
     if (!this.props.nav.nav.video) {
-      fadeChange('.iframeWrapper', 'fadeInVideo', false);
+      fadeChange('.youtube', 'fadeInVideo', false);
     }
+    // Setup Youtube Lazy Loading
+    this.ytLazyLoad();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -37,6 +81,11 @@ class VideoBox extends Component {
       return false;
     }
     return true;
+  }
+
+  componentDidUpdate() {
+    // Setup Youtube Lazy Loading
+    this.ytLazyLoad();
   }
   
   render() {
@@ -49,12 +98,11 @@ class VideoBox extends Component {
           </button>
         </form>
         <div className='videoWrapper'>
-          <div className='iframeWrapper fadeInVideo'>
-            <iframe
-              title='video'
-              width='560' height='293' src={videoCurrent.url} frameBorder='0' allow='encrypted-media' allowFullScreen
-            >
-            </iframe>
+          <div
+            className='youtube fadeInVideo'
+            data-embed={`${videoCurrent.url}`}
+            onClick={this.videoPlay}
+          >
           </div>
           <div className='videoTitle'>
             {videoCurrent.title}
