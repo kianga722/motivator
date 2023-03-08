@@ -1,0 +1,245 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+  vertical-align: baseline;
+  box-sizing: border-box;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Body*/
+
+body {
+  /* background-color: rgb(186, 73, 47); */
+  background-image: url('./images/bg.jpg');
+  background-position: 40% 0;
+	font-family: "Open Sans", Tahoma, Geneva, sans-serif;
+}
+
+/* Nav */
+#navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #c9c9ff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.logo {
+  display: flex;
+  margin: 2rem 2rem 1.5rem 2rem;
+  padding-bottom: .5rem;
+  font-size: 3rem;
+  border-bottom: 3px solid transparent; 
+}
+
+.logo:hover {
+  border-bottom: 3px solid #444857; 
+}
+
+.navLinks {
+  padding: 1rem;
+}
+
+.navLinks a {
+  display: inline-block;
+  margin: .5rem;
+  padding: 1rem;
+  border: 3px solid #444857; 
+  border-radius: 4px;
+  font-size: 1.5rem;
+}
+
+.btn-quotes:hover,
+.quote-active {
+  background-color: #c04823; 
+  color: white;
+}
+
+.btn-videos:hover,
+.video-active {
+  background-color: #1c9969; 
+  color: white;
+}
+
+/* Content Wrapper */
+#content-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Quote Box and Video Box */
+#quoteBox,
+#videoBox {
+  width: 600px;
+  margin-top: 15vh;
+  margin-bottom: 15vh;
+  padding: 2rem 2rem 0 2rem;
+  background-color: rgb(249, 249, 251);
+  border-radius: 4px;
+  border: 7px solid #444857;
+}
+
+.btn-quote-wrapper,
+.btn-video-wrapper {
+  text-align: center;
+}
+
+.btn-quote,
+.btn-video {
+  padding: 1rem;
+  color: white;
+  font-weight: 700;
+  background-color: #c04823;
+  border: 3px solid #444857;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-quote:hover,
+.btn-video:hover {
+  opacity: 0.8;
+}
+
+.quoteWrapper {
+  margin-bottom: 2rem;
+  animation-duration: 2s;
+  animation-fill-mode: both;
+}
+
+.quote {
+  padding: 2rem 1rem;
+  font-size: 2rem;
+  text-align: center;
+  line-height: 2.3rem;
+}
+
+.fa-quote-left {
+  margin-right: 1rem;
+}
+
+.fa-quote-right {
+  margin-left: 1rem;
+}
+
+.author {
+  text-align: right;
+}
+
+
+/* Video Box */
+.btn-video {
+  background-color: #1c9969;
+}
+
+.iframeWrapper {
+  animation-duration: 2s;
+  animation-fill-mode: both;
+}
+
+.iframeWrapper iframe {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.videoTitle {
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+ 
+.fadeIn {
+  animation-name: fadeIn;
+}
+
+@keyframes fadeInVideo {
+  0% {opacity: 0;}
+  50% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+.fadeInVideo {
+  animation-name: fadeInVideo;
+}
+
+@media (max-width: 800px) {
+  .logo {
+    display: none;
+  }
+
+  .navLinks {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0.5rem;
+  }
+
+  .navLinks a {
+    font-size: 1.2rem;
+  }
+
+  #quoteBox,
+  #videoBox {
+    width: 600px;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+  }
+
+  .quote {
+    font-size: 1.5rem;
+    line-height: 1.8rem;
+  }
+}
